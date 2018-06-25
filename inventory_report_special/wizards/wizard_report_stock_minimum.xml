@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_report_special" name="Informes Especiales" parent="stock.menu_stock_root" sequence="99" groups="stock.group_stock_manager"/>
+    
+    <record id="report_stock_minimum_wizard_view" model="ir.ui.view">
+        <field name="name">wizard.report.stock.minimum.form</field>
+        <field name="model">wizard.report.stock.minimum</field>
+        <field name="arch" type="xml">
+            <form string="Reporte de Stock Mínimo">
+                <group>
+                    <group>
+                        <field name="warehouse_option" widget="radio" attrs="{'required': True}"/>
+                        <field name="warehouse_id" widget="selection" attrs="{'required': [('warehouse_option', '=', '2')], 'invisible': [('warehouse_option', '=', '1')]}"/>
+                    </group>
+                </group>
+                <p class="oe_blue">
+                    Presione "Imprimir" para continuar con la operación.
+                </p>
+                <footer>
+                    <button string="Imprimir CVS" name="get_csv" type="object" default_focus="1" class="btn-primary"></button>
+                    <button string="Cancel" class="btn-default" special="cancel"></button>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_report_stock_minimum" model="ir.actions.act_window">
+        <field name="name">Reporte de Stock Mínimo</field>
+        <field name="res_model">wizard.report.stock.minimum</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="report_stock_minimum_wizard_view"></field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="menu_action_report_stock_minimum_wizard" 
+            name="Reporte de Stock Mínimo" sequence="40"
+            parent="inventory_report_special.menu_report_special"
+            action="action_report_stock_minimum" ></menuitem>
+            
+</odoo>
